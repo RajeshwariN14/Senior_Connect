@@ -4,7 +4,7 @@ const seniorSchema = new mongoose.Schema({
   name: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
+  
     unique: true, 
   },
 
@@ -30,6 +30,17 @@ const seniorSchema = new mongoose.Schema({
   passingYear: {
     type: Number,
     required: true
+  },
+
+  idCardURL:{
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /^(http|https):\/\/[^ "]+$/.test(v);
+      },
+      message: props => `${props.value} is not a valid URL!`
+    }
+ 
   },
 
   createdAt: {

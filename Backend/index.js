@@ -29,6 +29,7 @@ app.use('/api/sessions', sessionRoutes);
 app.use('/api/requests', requestRoutes);
 
 
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
@@ -41,18 +42,7 @@ app.use(session({
 }));
 
 
-// Test route
-app.get('/test-email', async (req, res) => {
 
-
-  try {
-    await sendEmail("rrn14.college@gmail.com", "This is a test mail", "<h2>This is a test email sent from your Node.js app using SendGrid!</h2>");
-    res.send("Test email sent successfully!");
-  } catch (error) {
-    console.error("Email sending failed:", error.response?.body || error.message);
-    res.status(500).send("Failed to send email");
-  }
-});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
