@@ -3,6 +3,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
 import authenticate from '../middleware/authmiddleware.js';
+import Senior from '../models/senior.js';
+
+
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -114,5 +117,82 @@ export const googleAuth = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(401).json({ message: "Google login failed", error: err.message });
+  }
+};
+
+export const getUserProfile = async (req, res) => {
+  try {
+    const userId = req.user.id; 
+    // 1. Get user (student or base info)
+    const user = await User.findById(userId).select('-password -__v -googleId -isGoogleUser -createdAt -updatedAt');
+;
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    // 2. Check if this user is a senior
+    const seniorProfile = await Senior.findOne({ name: userId });
+
+    // 3. Return appropriate response
+    if (seniorProfile) {
+      return res.status(200).json({
+        role: 'senior',
+        user,
+        seniorDetails: seniorProfile,
+      });
+    } else {
+      return res.status(200).json({
+        role: 'student',
+        user,
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+
+export const updateUserProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { name, collegeName, linkedInUrl, currentYear, branch , graduatingYear } = req.body;
+
+    // 1. Update the base User document (only name is allowed)
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { name },
+      { new: true, runValidators: true }
+    ).select('-password -__v -googleId -isGoogleUser -createdAt -updatedAt');
+;
+
+    if (!updatedUser) return res.status(404).json({ message: 'User not found' });
+
+    // 2. Check if user is a senior
+    const seniorProfile = await Senior.findOne({ name: userId });
+
+    let updatedSenior = null;
+    if (seniorProfile) {
+      updatedSenior = await Senior.findByIdAndUpdate(
+        seniorProfile._id,
+        {
+          ...(collegeName && { collegeName }),
+          ...(linkedInUrl && { linkedInUrl }),
+          ...(currentYear && { currentYear }),
+          ... (branch && { branch }), 
+          ...(graduatingYear && { passingYear: graduatingYear }) // mapping correct field
+        },
+        { new: true, runValidators: true }
+      );
+    }
+    
+    return res.status(200).json({
+      message: 'Profile updated successfully',
+      user: updatedUser,
+      seniorDetails: updatedSenior,
+    });
+
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 };

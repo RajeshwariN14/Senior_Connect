@@ -43,6 +43,16 @@ const seniorSchema = new mongoose.Schema({
  
   },
 
+  LinkedInUrl:{
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /^(http|https):\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+$/.test(v);
+      },
+      message: props => `${props.value} is not a valid LinkedIn URL!`
+    }
+  },
+
   createdAt: {
     type: Date,
     default: Date.now

@@ -1,21 +1,4 @@
-// import express from 'express';
-// import { signup, login, googleCallback } from '../controller/authController.js';
-// // For Google OAuth, you would use passport or similar middleware
-// // import passport from 'passport';
 
-// const router = express.Router();
-
-// // Manual signup
-// router.post('/signup', signup);
-
-// // Manual login
-// router.post('/login', login);
-
-// // Google OAuth routes (pseudo, actual implementation needs passport setup)
-// // router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-// // router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), googleCallback);
-
-// export default router; 
 
 import express from 'express';
 import {
@@ -26,6 +9,7 @@ import {
 import registerSenior from '../controller/registrationController.js';
 import {authenticate} from '../middleware/authmiddleware.js';
 import { auth } from 'google-auth-library';
+import { getUserProfile, updateUserProfile } from '../controller/authController.js';
 
 
 
@@ -46,5 +30,6 @@ router.post('/google-auth', googleAuth);
 
 //route for senior registration
 router.post('/register',authenticate, registerSenior);
-
+router.get('/profile', authenticate, getUserProfile);
+router.put('/profile', authenticate,updateUserProfile );
 export default router;
