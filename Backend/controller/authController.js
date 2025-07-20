@@ -196,3 +196,30 @@ export const updateUserProfile = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+export const getAllSeniors = async (req, res) => {
+  try {
+    const seniors = await Senior.find().populate('name', 'name email'); // Populate 'name' from User model
+
+    res.status(200).json(seniors);
+  } catch (error) {
+    console.error('Error fetching seniors:', error);
+    res.status(500).json({ message: 'Server error while fetching seniors' });
+  }
+};
+export const getSeniorById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Get senior document and populate the user's basic info
+    const senior = await Senior.findById(id).populate('name', 'name email');
+
+    if (!senior) {
+      return res.status(404).json({ message: 'Senior not found' });
+    }
+
+    res.status(200).json(senior);
+  } catch (error) {
+    console.error('Error fetching senior by ID:', error);
+    res.status(500).json({ message: 'Server error while fetching senior by ID' });
+  }
+};

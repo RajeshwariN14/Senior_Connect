@@ -11,12 +11,13 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SENDER_PASSWORD, // Use an app password if 2FA is enabled
   },
 });
-const sendEmail = async (to, subject, html) => {
+const sendEmail = async (to, subject, html = []) => {
   const mailOptions = {
     from: process.env.SENDER_EMAIL,
     to,
     subject,
     html,
+ 
   };
 
   try {

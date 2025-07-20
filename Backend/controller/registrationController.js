@@ -2,7 +2,7 @@ import authmiddleware from '../middleware/authmiddleware.js';
 import Senior from '../models/senior.js';
 
 const registerSenior = async (req, res) => {
-  const { collegeName, branch, currentYear, passingYear, idCardURL, LinkedInUrl } = req.body;
+  const { collegeName, branch, currentYear, passingYear, idCardURL, LinkedInUrl,ProfilePicture } = req.body;
 
   try {
     
@@ -24,10 +24,13 @@ const registerSenior = async (req, res) => {
 
       collegeName,
       branch,
-      currentYear,
-      passingYear,
+      currentYear: Number(currentYear), 
+      passingYear: Number(passingYear),
+      
+      
       idCardURL,
-      LinkedInUrl
+      LinkedInUrl,
+      ProfilePicture
     });
 
     await senior.save();

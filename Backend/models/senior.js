@@ -29,7 +29,7 @@ const seniorSchema = new mongoose.Schema({
 
   passingYear: {
     type: Number,
-    required: true
+    required: true,
   },
 
   idCardURL:{
@@ -53,6 +53,19 @@ const seniorSchema = new mongoose.Schema({
     }
   },
 
+  ProfilePicture: {
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /^(http|https):\/\/[^ "]+$/.test(v);
+      },
+      message: props => `${props.value} is not a valid URL!`,
+      
+    },
+    default: process.env.DEFAULT_PROFILE_PIC_URL
+
+  },
+
   createdAt: {
     type: Date,
     default: Date.now
@@ -62,3 +75,5 @@ const seniorSchema = new mongoose.Schema({
 const Senior = mongoose.model('Senior', seniorSchema);
 
 export default Senior;
+
+

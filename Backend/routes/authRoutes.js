@@ -1,5 +1,3 @@
-
-
 import express from 'express';
 import {
   signup,
@@ -10,6 +8,9 @@ import registerSenior from '../controller/registrationController.js';
 import {authenticate} from '../middleware/authmiddleware.js';
 import { auth } from 'google-auth-library';
 import { getUserProfile, updateUserProfile } from '../controller/authController.js';
+import { getAllSeniors } from '../controller/authController.js';
+import { getSeniorById } from '../controller/authController.js';
+
 
 
 
@@ -32,4 +33,8 @@ router.post('/google-auth', googleAuth);
 router.post('/register',authenticate, registerSenior);
 router.get('/profile', authenticate, getUserProfile);
 router.put('/profile', authenticate,updateUserProfile );
+router.get('/seniors', getAllSeniors);
+router.get('/seniors/:id', getSeniorById);
+
+
 export default router;

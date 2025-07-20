@@ -84,7 +84,8 @@ router.post('/confirm/:id', async (req, res) => {
 
     const calendarEvent = await createCalendarEvent({
       summary: 'Senior Connect Session',
-      description: `Exam: ${session.examType}, Percentile: ${session.percentile}`,
+
+      description: ` JEEPercentile: ${session.jeePercentile}, CETPercentile: ${session.cetPercentile}`,
       startTime,
       endTime,
       attendeeEmails: [

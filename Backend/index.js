@@ -8,7 +8,7 @@ import connectDB from './config/database.js';
 import sendEmail from './utils/sendEmail.js';
 import {authenticate} from './middleware/authmiddleware.js';
 import authRoutes from './routes/authRoutes.js';
-
+import PendingRoutes from './routes/PendingRoutes.js';
 import sessionRoutes from './routes/sessionRoutes.js';
 import requestRoutes from './routes/RequestRoutes.js';
 
@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/sessions', sessionRoutes);
 app.use('/api/requests', requestRoutes);
+app.use('/api/pending', PendingRoutes);
 
 
 

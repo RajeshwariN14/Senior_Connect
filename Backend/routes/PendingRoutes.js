@@ -1,15 +1,16 @@
 import express from 'express';
-import authMiddleware from '../middlewares/authmiddleware.js';
-import SessionRequest from '../models/SessionRequest.js';
+import authMiddleware from '../middleware/authmiddleware.js';
+import {authenticate} from '../middleware/authmiddleware.js';
+import SessionRequest from '../models/session.js';
 import Senior from '../models/senior.js';
 
 const router = express.Router();
 
-// ✅ Student pending
-router.get('/student', authMiddleware, async (req, res) => {
+//  Student pending
+router.get('/student', authenticate, async (req, res) => {
   try {
     const pending = await SessionRequest.find({
-      student: req.user._id,
+      student: req.user.id,
       status: 'pending'
     })
     .populate({
@@ -25,14 +26,14 @@ router.get('/student', authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Senior pending
-router.get('/senior', authMiddleware, async (req, res) => {
+//  Senior pending
+router.get('/senior', authenticate, async (req, res) => {
   try {
-    const seniorProfile = await Senior.findOne({ name: req.user._id });
+    const seniorProfile = await Senior.findOne({ name: req.user.id });
     if (!seniorProfile) return res.status(404).json({ msg: 'Senior profile not found' });
 
     const pending = await SessionRequest.find({
-      senior: seniorProfile._id,
+      senior: seniorProfile.id,
       status: 'pending'
     })
     .populate('student', 'name email')
