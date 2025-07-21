@@ -53,7 +53,7 @@ const seniorSchema = new mongoose.Schema({
     }
   },
 
-  ProfilePicture: {
+  profilePicture: {
     type: String,
     validate: {
       validator: function(v) {
@@ -62,7 +62,7 @@ const seniorSchema = new mongoose.Schema({
       message: props => `${props.value} is not a valid URL!`,
       
     },
-    default: process.env.DEFAULT_PROFILE_PIC_URL
+  
 
   },
 

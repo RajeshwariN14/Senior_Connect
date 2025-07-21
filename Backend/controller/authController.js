@@ -169,22 +169,35 @@ export const updateUserProfile = async (req, res) => {
 
     // 2. Check if user is a senior
     const seniorProfile = await Senior.findOne({ name: userId });
-
     let updatedSenior = null;
     if (seniorProfile) {
+      const updateFields = {
+        ...(collegeName && { collegeName }),
+        ...(linkedInUrl && { LinkedInUrl: linkedInUrl }),
+        ...(currentYear && { currentYear }),
+        ...(branch && { branch }),
+        ...(graduatingYear && { passingYear: graduatingYear }),
+      };
+
+      // Handle new profile picture (uploaded file)
+      if (req.file && req.file.path) {
+          updateFields.ProfilePicture = req.file.path; // fallback
+      if (req.file.path.startsWith('http')) {
+        updateFields.ProfilePicture = req.file.path; // cloudinary gives full path
+      }
+      if (req.file.secure_url) {
+      updateFields.ProfilePicture = req.file.secure_url;
+      }
+}
+
+
       updatedSenior = await Senior.findByIdAndUpdate(
         seniorProfile._id,
-        {
-          ...(collegeName && { collegeName }),
-          ...(linkedInUrl && { linkedInUrl }),
-          ...(currentYear && { currentYear }),
-          ... (branch && { branch }), 
-          ...(graduatingYear && { passingYear: graduatingYear }) // mapping correct field
-        },
+        updateFields,
         { new: true, runValidators: true }
       );
     }
-    
+
     return res.status(200).json({
       message: 'Profile updated successfully',
       user: updatedUser,
@@ -195,7 +208,10 @@ export const updateUserProfile = async (req, res) => {
     console.error('Error updating profile:', error);
     res.status(500).json({ message: 'Server error' });
   }
+
 };
+
+
 export const getAllSeniors = async (req, res) => {
   try {
     const seniors = await Senior.find().populate('name', 'name email'); // Populate 'name' from User model
@@ -206,6 +222,9 @@ export const getAllSeniors = async (req, res) => {
     res.status(500).json({ message: 'Server error while fetching seniors' });
   }
 };
+
+
+
 export const getSeniorById = async (req, res) => {
   try {
     const { id } = req.params;

@@ -10,6 +10,7 @@ import { auth } from 'google-auth-library';
 import { getUserProfile, updateUserProfile } from '../controller/authController.js';
 import { getAllSeniors } from '../controller/authController.js';
 import { getSeniorById } from '../controller/authController.js';
+import upload from '../middleware/uploadmiddleware.js';
 
 
 
@@ -30,11 +31,19 @@ router.post('/google-auth', googleAuth);
 
 
 //route for senior registration
-router.post('/register',authenticate, registerSenior);
+router.post('/register',authenticate, upload.fields([
+    { name: 'idCard', maxCount: 1 },
+    { name: 'profilePicture', maxCount: 1 }
+  ]),registerSenior);
+
+
 router.get('/profile', authenticate, getUserProfile);
-router.put('/profile', authenticate,updateUserProfile );
+router.put('/profile', authenticate, upload.fields([
+    { name: 'profilePicture', maxCount: 1 },
+    { name: 'idCard', maxCount: 1 }
+  ]),updateUserProfile );
 router.get('/seniors', getAllSeniors);
 router.get('/seniors/:id', getSeniorById);
 
 
-export default router;
+export default router; 
