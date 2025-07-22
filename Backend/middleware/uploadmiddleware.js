@@ -36,6 +36,9 @@ const storage = new CloudinaryStorage({
     } else if (file.fieldname === 'idCard') {
       folderName = 'SeniorConnect/IDCards';
     }
+    if(file.fieldname === 'jeeScoreCard' || file.fieldname === 'cetScoreCard') {
+      folderName = 'SeniorConnect/ScoreCards';
+    }
 
     return {
       folder: folderName,

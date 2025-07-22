@@ -32,27 +32,25 @@ const sessionRequestSchema = new mongoose.Schema({
     max: 100
   },
 
-  cetScoreCardURL:{
-    type:String,
-    validate: {
-      validator: function(v) {
-        return /^(http|https):\/\/[^ "]+$/.test(v);
-      },
-      message: props => `${props.value} is not a valid URL!`,
-      
-    }
-  },
-
-  jeeScoreCardURL:{
-    type:String,
-    validate: {
-      validator: function(v) {
-        return /^(http|https):\/\/[^ "]+$/.test(v);
-      },
-      message: props => `${props.value} is not a valid URL!`,
-      
-    }
-  },
+cetScoreCardURL: {
+  type: String,
+  validate: {
+    validator: function (v) {
+      // Allow null or undefined (optional field)
+      return !v || /^https?:\/\/.+$/.test(v);
+    },
+    message: props => `${props.value} is not a valid URL!`
+  }
+},
+jeeScoreCardURL: {
+  type: String,
+  validate: {
+    validator: function (v) {
+      return !v || /^https?:\/\/.+$/.test(v);
+    },
+    message: props => `${props.value} is not a valid URL!`
+  }
+},
 
   status: {
     type: String,
