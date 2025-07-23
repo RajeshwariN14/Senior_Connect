@@ -62,7 +62,12 @@ const seniorSchema = new mongoose.Schema({
       message: props => `${props.value} is not a valid URL!`,
       
     },
-  
+
+
+  isVerified: {
+    type: Boolean,
+    default: false
+  }
 
   },
 

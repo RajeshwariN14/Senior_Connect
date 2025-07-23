@@ -9,9 +9,13 @@ const router = express.Router();
 //  Student pending
 router.get('/student', authenticate, async (req, res) => {
   try {
+    const now=new Date();
     const pending = await SessionRequest.find({
       student: req.user.id,
-      status: 'pending'
+      $or:[
+        { status: 'pending' },
+        { status: 'confirmed', scheduledAt: { $gte: now } } 
+      ]
     })
     .populate({
       path: 'senior',
@@ -29,12 +33,16 @@ router.get('/student', authenticate, async (req, res) => {
 //  Senior pending
 router.get('/senior', authenticate, async (req, res) => {
   try {
+    const now = new Date();
     const seniorProfile = await Senior.findOne({ name: req.user.id });
     if (!seniorProfile) return res.status(404).json({ msg: 'Senior profile not found' });
 
     const pending = await SessionRequest.find({
       senior: seniorProfile.id,
-      status: 'pending'
+      $or: [
+        { status: 'pending' },
+        { status: 'confirmed', scheduledAt: { $gte: new Date() } }
+      ]
     })
     .populate('student', 'name email')
     .sort({ createdAt: -1 });
