@@ -6,7 +6,7 @@ function Aboutus() {
     {
       icon: <FaUserFriends />,
       title: 'Meet Real Seniors',
-      desc: 'No more random advice! Talk to real students from IITs, NITs, and top engineering colleges who’ve lived the experience.',
+      desc: 'No more random advice! Talk to real students from various top engineering colleges who’ve lived the experience.',
     },
     {
       icon: <FaBullseye />,
@@ -21,7 +21,7 @@ function Aboutus() {
     {
       icon: <FaHeart />,
       title: 'Safe & Supportive',
-      desc: 'All conversations are safe and anonymous. We use email & Zoom — no number sharing, just guidance with care.',
+      desc: 'All conversations are safe and anonymous. Its just guidance with care.',
     },
   ];
 

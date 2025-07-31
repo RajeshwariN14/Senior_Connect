@@ -12,7 +12,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 //  Generate your custom JWT
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-    expiresIn: '4h'
+    expiresIn: '2m'
   });
 };
 
@@ -37,7 +37,17 @@ export const signup = async (req, res) => {
     });
 
     const token = generateToken(user._id);
-    res.status(201).json({ user, token });
+    // res.status(201).json({ user, token });
+    res.status(201).json({
+  token,
+  user: {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    role: 'student' // default role after signup
+  }
+});
+
 
   } catch (err) {
     res.status(500).json({ message: "Signup failed", error: err.message });
@@ -66,9 +76,22 @@ export const login = async (req, res) => {
     }
     
     const token = generateToken(user._id);
-    res.status(200).json({ user, token 
+    // Check if the user is a senior
+const seniorProfile = await Senior.findOne({ name: user._id });
+
+res.status(200).json({
+  token,
+  user: {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    role: seniorProfile ? 'senior' : 'student'
+  }
+});
+
+    // res.status(200).json({ user, token 
       
-    });
+    // });
    
 
   } catch (err) {
@@ -179,16 +202,20 @@ export const updateUserProfile = async (req, res) => {
         ...(graduatingYear && { passingYear: graduatingYear }),
       };
 
-      // Handle new profile picture (uploaded file)
-      if (req.file && req.file.path) {
-          updateFields.ProfilePicture = req.file.path; // fallback
-      if (req.file.path.startsWith('http')) {
-        updateFields.ProfilePicture = req.file.path; // cloudinary gives full path
+      //Handle new profile picture (uploaded file)
+//       if (req.files && req.files.path) {
+//           updateFields.profilePicture = req.file.path; // fallback
+//       if (req.file.path.startsWith('http')) {
+//         updateFields.profilePicture = req.file.path; // cloudinary gives full path
+//       }
+//       if (req.file.secure_url) {
+//       updateFields.profilePicture = req.file.secure_url;
+//       }
+// }
+      const profilePicture = req.files?.profilePicture?.[0];
+      if (profilePicture) {
+        updateFields.profilePicture = profilePicture.secure_url || profilePicture.path;
       }
-      if (req.file.secure_url) {
-      updateFields.ProfilePicture = req.file.secure_url;
-      }
-}
 
 
       updatedSenior = await Senior.findByIdAndUpdate(
@@ -215,8 +242,19 @@ export const updateUserProfile = async (req, res) => {
 export const getAllSeniors = async (req, res) => {
   try {
     const seniors = await Senior.find().populate('name', 'name email'); // Populate 'name' from User model
+//     const formattedSeniors = seniors.map(senior => ({
+//   ...senior.toObject(),
+//   name: senior.name.name // flatten
+// }));
+ const formattedSeniors = seniors
+  .filter(s => s.name) //  Filter out seniors whose user reference is broken
+  .map(senior => ({
+    ...senior.toObject(),
+    name: senior.name.name,
+    email: senior.name.email
+  }));
 
-    res.status(200).json(seniors);
+    res.status(200).json(formattedSeniors);
   } catch (error) {
     console.error('Error fetching seniors:', error);
     res.status(500).json({ message: 'Server error while fetching seniors' });
@@ -242,3 +280,4 @@ export const getSeniorById = async (req, res) => {
     res.status(500).json({ message: 'Server error while fetching senior by ID' });
   }
 };
+

@@ -1,174 +1,5 @@
-// import React, { useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import {
-//   FaUniversity,
-//   FaUserGraduate,
-//   FaCode,
-//   FaLinkedin,
-//   FaUserPlus,
-// } from 'react-icons/fa';
 
-// function ViewSeniorprofile() {
-//   const [requestStatus, setRequestStatus] = useState(null);
-//   const [showModal, setShowModal] = useState(false);
-//   const [percentile, setPercentile] = useState('');
-//   const { id } = useParams();
-
-//   const cardData = [
-//     {
-//       id: 1,
-//       name: 'Sneha Patil',
-//       university: 'PICT Pune',
-//       year: '2025',
-//       branch: 'AI & DS',
-//       description: 'Passionate about backend and data analytics.',
-//       image: 'https://randomuser.me/api/portraits/women/12.jpg',
-//       linkedin: 'https://linkedin.com/in/snehapatil',
-//       email: 'sneha@example.com',
-//       expectedPercentile: '95+',
-//     },
-//     // other data ...
-//   ];
-
-//   const senior = cardData.find((user) => user.id === parseInt(id));
-
-//   const handleSendRequest = async () => {
-//     if (!percentile.trim()) {
-//       alert('Please enter your CET/JEE percentile.');
-//       return;
-//     }
-
-//     setRequestStatus('pending');
-
-//     try {
-//       const res = await fetch('http://localhost:5000/api/send-request-email', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({
-//           name: senior.name,
-//           email: senior.email,
-//           percentile,
-//         }),
-//       });
-
-//       const data = await res.json();
-
-//       if (res.ok) {
-//         setRequestStatus('sent');
-//         setShowModal(false);
-//       } else {
-//         setRequestStatus('error');
-//         alert(`Failed to send email: ${data.message}`);
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       setRequestStatus('error');
-//       alert('An error occurred while sending the request');
-//     }
-//   };
-
-//   if (!senior) {
-//     return (
-//       <div className="p-6 text-center text-red-500 font-semibold text-xl">
-//         Senior not found.
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="relative max-w-3xl mx-auto mt-12 px-6 py-10 bg-white text-[#222831] rounded-3xl shadow-xl border border-[#d0d0d0] font-sans">
-//       <div className="flex flex-col items-center text-center relative">
-//         <div className="bg-[#EEEEEE] p-[5px] rounded-full mb-5 shadow-md ring-4 ring-[#76ABAE]">
-//           <img
-//             src={senior.image}
-//             alt={senior.name}
-//             className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md"
-//           />
-//         </div>
-
-//         <h2 className="text-3xl font-extrabold tracking-wide mb-1 text-[#31363F]">{senior.name}</h2>
-//         <p className="italic text-sm text-[#555] mb-3">{senior.description}</p>
-
-//         <div className="text-sm text-[#444] space-y-2 mb-6">
-//           <p className="flex items-center justify-center gap-2">
-//             <FaUniversity className="text-[#76ABAE]" />
-//             <span className="font-medium">College:</span> {senior.university}
-//           </p>
-//           <p className="flex items-center justify-center gap-2">
-//             <FaCode className="text-[#76ABAE]" />
-//             <span className="font-medium">Branch:</span> {senior.branch}
-//           </p>
-//           <p className="flex items-center justify-center gap-2">
-//             <FaUserGraduate className="text-[#76ABAE]" />
-//             <span className="font-medium">Year:</span> {senior.year}
-//           </p>
-//         </div>
-
-//         <div className="mt-4 flex flex-col sm:flex-row justify-center gap-4">
-//           <a
-//             href={senior.linkedin}
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="flex items-center gap-2 bg-[#76ABAE] text-[#222831] px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#5a9295] transition shadow-md"
-//           >
-//             <FaLinkedin /> LinkedIn Profile
-//           </a>
-
-//           {requestStatus === 'sent' ? (
-//             <span className="px-5 py-2.5 bg-[#FFD369] text-black rounded-full text-sm font-semibold shadow-md">
-//               Request Sent
-//             </span>
-//           ) : (
-//             <button
-//               onClick={() => setShowModal(true)}
-//               disabled={requestStatus === 'pending'}
-//               className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition shadow-md ${
-//                 requestStatus === 'pending'
-//                   ? 'bg-gray-400 cursor-not-allowed text-white'
-//                   : 'bg-[#222831] hover:bg-[#5a9295] text-white'
-//               }`}
-//             >
-//               <FaUserPlus />
-//               {requestStatus === 'pending' ? 'Sending...' : 'Request a Session'}
-//             </button>
-//           )}
-//         </div>
-
-//         {showModal && (
-//           <div className="absolute top-full mt-6 left-1/2 transform -translate-x-1/2 bg-[#f8f8f8] p-6 rounded-xl shadow-2xl w-full max-w-sm z-30 border border-[#76ABAE] text-[#222831]">
-//             <h3 className="text-lg font-semibold mb-4 text-center">
-//               Enter your CET/JEE Percentile
-//             </h3>
-//             <input
-//               type="text"
-//               value={percentile}
-//               onChange={(e) => setPercentile(e.target.value)}
-//               placeholder="e.g. 98.75"
-//               className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-[#76ABAE]"
-//             />
-//             <div className="flex justify-end gap-4">
-//               <button
-//                 onClick={() => setShowModal(false)}
-//                 className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"
-//               >
-//                 Cancel
-//               </button>
-//               <button
-//                 onClick={handleSendRequest}
-//                 className="px-4 py-2 bg-[#76ABAE] text-[#222831] rounded-md hover:bg-[#5a9295]"
-//               >
-//                 Submit & Send
-//               </button>
-//             </div>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default ViewSeniorprofile;
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   FaUniversity,
@@ -179,172 +10,209 @@ import {
 } from 'react-icons/fa';
 
 function ViewSeniorprofile() {
+  const { id: seniorId } = useParams();
+  const [senior, setSenior] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [showFormCard, setShowFormCard] = useState(false);
   const [cetPercentile, setCetPercentile] = useState('');
   const [jeePercentile, setJeePercentile] = useState('');
-  const [requestStatus, setRequestStatus] = useState(null);
-  const { id } = useParams();
+  const [cetScoreCard, setCetScoreCard] = useState(null);
+  const [jeeScoreCard, setJeeScoreCard] = useState(null);
+  const [requestSent, setRequestSent] = useState(false);
 
-  const cardData = [
-    {
-      id: 1,
-      name: 'Sneha Patil',
-      university: 'PICT Pune',
-      year: '2025',
-      branch: 'AI & DS',
-      description: 'Passionate about backend and data analytics.',
-      image: 'https://randomuser.me/api/portraits/women/12.jpg',
-      linkedin: 'https://linkedin.com/in/snehapatil',
-      email: 'sneha@example.com',
-    },
-  ];
+  useEffect(() => {
+    const fetchSenior = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/api/auth/seniors/${seniorId}`);
+        const data = await res.json();
+        setSenior(data);
+      } catch (error) {
+        console.error('Error fetching senior data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const senior = cardData.find((user) => user.id === parseInt(id));
+    fetchSenior();
+  }, [seniorId]);
+
+  useEffect(() => {
+    const checkIfAlreadyRequested = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/pending/student", {
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        const data = await res.json();
+
+        const alreadySent = data.some(
+          (request) => request.senior._id === seniorId
+        );
+
+        if (alreadySent) {
+          setRequestSent(true);
+        }
+      } catch (error) {
+        console.error("Error checking existing session request:", error);
+      }
+    };
+
+    checkIfAlreadyRequested();
+  }, [seniorId]);
 
   const handleSendRequest = async () => {
-    if (!cetPercentile.trim() && !jeePercentile.trim()) {
-      alert('Please enter at least one percentile.');
+    if (!jeePercentile && !cetPercentile) {
+      alert('Please enter at least one percentile (JEE or CET)');
+      return;
+    }
+    if (jeePercentile && !jeeScoreCard) {
+      alert('Please upload JEE scorecard');
+      return;
+    }
+    if (cetPercentile && !cetScoreCard) {
+      alert('Please upload CET scorecard');
       return;
     }
 
-    setRequestStatus('pending');
+    const formData = new FormData();
+    formData.append("seniorId", seniorId);
+    if (jeePercentile) formData.append("jeePercentile", jeePercentile);
+    if (cetPercentile) formData.append("cetPercentile", cetPercentile);
+    if (jeeScoreCard) formData.append("jeeScoreCard", jeeScoreCard);
+
+
+    if (cetScoreCard) formData.append("cetScoreCard", cetScoreCard);
 
     try {
-      const res = await fetch('http://localhost:5000/api/send-request-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: senior.name,
-          email: senior.email,
-          cetPercentile,
-          jeePercentile,
-        }),
+      const res = await fetch("http://localhost:3000/api/requests/request", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
       });
 
       const data = await res.json();
-
       if (res.ok) {
-        setRequestStatus('sent');
+        setRequestSent(true);
         setShowFormCard(false);
+        alert("Session request sent successfully!");
       } else {
-        alert(`Failed to send email: ${data.message}`);
-        setRequestStatus('error');
+        alert(`Failed to send request: ${data.msg || data.message}`);
       }
     } catch (error) {
-      console.error(error);
-      alert('An error occurred while sending the request.');
-      setRequestStatus('error');
+      console.error('Error sending request:', error);
     }
   };
 
+  if (loading) {
+    return <div className="p-6 text-center text-gray-500 font-semibold text-xl">Loading senior profile...</div>;
+  }
+
   if (!senior) {
-    return (
-      <div className="p-6 text-center text-red-500 font-semibold text-xl">
-        Senior not found.
-      </div>
-    );
+    return <div className="p-6 text-center text-red-500 font-semibold text-xl">Senior not found.</div>;
   }
 
   return (
     <div className="flex justify-center px-4 py-10 font-sans">
       <div className="relative w-full max-w-3xl bg-white text-[#222831] rounded-3xl shadow-xl border border-[#d0d0d0] px-6 py-10 text-center overflow-hidden">
 
-        {/* Popup form inside the card */}
-        {/* {showFormCard && (
-          <div className="absolute top-0 left-0 w-full h-full bg-[#f8f8f8] bg-opacity-95 z-20 flex flex-col justify-center items-center p-6">
-            <div className="w-full max-w-sm">
-              <h2 className="text-xl font-semibold mb-4 text-center">Enter Percentile Details</h2>
+        {/* Modal */}
+        {showFormCard && (
+          <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/90">
+            <div className="border border-[#76ABAE] rounded-xl shadow-2xl p-6 w-[90%] max-w-sm text-[#222831] bg-white">
+              <h3 className="text-lg font-semibold mb-4 text-center">
+                Enter Your Percentile Details
+              </h3>
+
               <input
                 type="text"
                 placeholder="CET Percentile (e.g. 98.75)"
                 value={cetPercentile}
                 onChange={(e) => setCetPercentile(e.target.value)}
-                className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#76ABAE]"
+                className="w-full mb-3 px-4 py-2 border border-gray-300 rounded-md"
               />
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">CET Marksheet:</label>
+                <label className="inline-block px-4 py-2 cursor-pointer bg-[#76ABAE] text-white rounded-md">
+                  Upload
+                  <input
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    onChange={(e) => setCetScoreCard(e.target.files[0])}
+                    className="hidden"
+                  />
+                </label>
+                {cetScoreCard && <p className="mt-2 text-sm">{cetScoreCard.name}</p>}
+              </div>
+
               <input
                 type="text"
                 placeholder="JEE Percentile (e.g. 97.50)"
                 value={jeePercentile}
                 onChange={(e) => setJeePercentile(e.target.value)}
-                className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#76ABAE]"
+                className="w-full mb-3 px-4 py-2 border border-gray-300 rounded-md"
               />
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">JEE Marksheet:</label>
+                <label className="inline-block px-4 py-2 cursor-pointer bg-[#76ABAE] text-white rounded-md">
+                  Upload
+                  <input
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    onChange={(e) => setJeeScoreCard(e.target.files[0])}
+                    className="hidden"
+                  />
+                </label>
+                {jeeScoreCard && <p className="mt-2 text-sm">{jeeScoreCard.name}</p>}
+              </div>
+
               <div className="flex justify-end gap-4">
                 <button
                   onClick={() => setShowFormCard(false)}
-                  className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+                  className="px-4 py-2 bg-[#EEEEEE] text-[#222831] rounded-md"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSendRequest}
-                  className="px-4 py-2 bg-[#76ABAE] text-[#222831] rounded hover:bg-[#5a9295]"
+                  className="px-4 py-2 bg-[#222831] text-white rounded-md hover:bg-[#5a999c]"
                 >
                   Submit & Send
                 </button>
               </div>
             </div>
           </div>
-        )} */}
-        {showFormCard && (
-  <div className="absolute inset-0 z-20 flex items-center justify-center">
-    <div className="bg-white border border-[#76ABAE] rounded-xl shadow-2xl p-6 w-[90%] max-w-sm text-[#222831]">
-      <h3 className="text-lg font-semibold mb-4 text-center">
-        Enter Your Percentile Details
-      </h3>
+        )}
 
-      <input
-        type="text"
-        placeholder="CET Percentile (e.g. 98.75)"
-        value={cetPercentile}
-        onChange={(e) => setCetPercentile(e.target.value)}
-        className="w-full mb-3 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#76ABAE]"
-      />
-
-      <input
-        type="text"
-        placeholder="JEE Percentile (e.g. 97.50)"
-        value={jeePercentile}
-        onChange={(e) => setJeePercentile(e.target.value)}
-        className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#76ABAE]"
-      />
-
-      <div className="flex justify-end gap-4">
-        <button
-          onClick={() => setShowFormCard(false)}
-          className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={handleSendRequest}
-          className="px-4 py-2 bg-[#76ABAE] text-[#222831] rounded-md hover:bg-[#5a9295]"
-        >
-          Submit & Send
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
-
-        {/* Main card content */}
+        {/* Profile Display */}
         <div className={`${showFormCard ? 'blur-sm pointer-events-none' : ''}`}>
           <div className="flex flex-col items-center">
             <div className="bg-[#EEEEEE] p-[5px] rounded-full mb-5 shadow-md ring-4 ring-[#76ABAE]">
               <img
-                src={senior.image}
-                alt={senior.name}
+                src={senior.profilePicture || '/profile.svg'}
+                alt={senior?.name?.name || 'Senior'}
                 className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md"
               />
             </div>
 
-            <h2 className="text-3xl font-extrabold mb-1 text-[#31363F]">{senior.name}</h2>
-            <p className="italic text-sm text-[#555] mb-3">{senior.description}</p>
+            <h2 className="text-3xl font-extrabold mb-1 text-[#31363F]">
+              {senior?.name?.name}
+            </h2>
+            <p className="italic text-sm text-[#555] mb-3">
+              {senior.description || 'Senior Mentor'}
+            </p>
 
             <div className="text-sm text-[#444] space-y-2 mb-6">
               <p className="flex items-center justify-center gap-2">
                 <FaUniversity className="text-[#76ABAE]" />
-                <span className="font-medium">College:</span> {senior.university}
+                <span className="font-medium">College:</span> {senior.collegeName}
               </p>
               <p className="flex items-center justify-center gap-2">
                 <FaCode className="text-[#76ABAE]" />
@@ -352,21 +220,23 @@ function ViewSeniorprofile() {
               </p>
               <p className="flex items-center justify-center gap-2">
                 <FaUserGraduate className="text-[#76ABAE]" />
-                <span className="font-medium">Year:</span> {senior.year}
+                <span className="font-medium">Year:</span> {senior.currentYear}
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4 mt-4">
-              <a
-                href={senior.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-[#76ABAE] text-[#222831] px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#5a9295] transition shadow-md"
-              >
-                <FaLinkedin /> LinkedIn Profile
-              </a>
+              {senior.LinkedInUrl && (
+                <a
+                  href={senior.LinkedInUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 bg-[#76ABAE] text-[#222831] px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#5a9295]"
+                >
+                  <FaLinkedin /> LinkedIn Profile
+                </a>
+              )}
 
-              {requestStatus === 'sent' ? (
+              {requestSent ? (
                 <span className="px-5 py-2.5 bg-[#FFD369] text-black rounded-full text-sm font-semibold shadow-md">
                   Request Sent
                 </span>
@@ -387,4 +257,5 @@ function ViewSeniorprofile() {
 }
 
 export default ViewSeniorprofile;
+
 
