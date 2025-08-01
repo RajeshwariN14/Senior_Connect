@@ -10,6 +10,7 @@ import { auth } from 'google-auth-library';
 import { getUserProfile, updateUserProfile } from '../controller/authController.js';
 import { getAllSeniors } from '../controller/authController.js';
 import { getSeniorById } from '../controller/authController.js';
+import { getSeniorByCollegeName } from '../controller/authController.js';
 import upload from '../middleware/uploadmiddleware.js';
 
 
@@ -44,6 +45,7 @@ router.put('/profile', authenticate, upload.fields([
   ]),updateUserProfile );
 router.get('/seniors', getAllSeniors);
 router.get('/seniors/:id', getSeniorById);
+router.get('/search', getSeniorByCollegeName);
 
 
 export default router; 

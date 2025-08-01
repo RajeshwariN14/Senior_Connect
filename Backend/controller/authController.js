@@ -12,7 +12,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 //  Generate your custom JWT
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-    expiresIn: '2m'
+    expiresIn: '3h'
   });
 };
 
@@ -280,4 +280,24 @@ export const getSeniorById = async (req, res) => {
     res.status(500).json({ message: 'Server error while fetching senior by ID' });
   }
 };
+
+export const getSeniorByCollegeName= async (req,res)=>{
+  try {
+    const { collegeName } = req.query;
+
+    if (!collegeName) {
+      return res.status(400).json({ message: "College query is required" });
+    }
+
+    // Case-insensitive search using RegExp
+    const matchingSeniors = await Senior.find({
+      collegeName: { $regex: collegeName, $options: "i" },
+    }).populate("name", "name profilePicture");
+
+    res.json(matchingSeniors);
+  } catch (err) {
+    console.error("Search error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+}
 
