@@ -1,10 +1,12 @@
+
+
+
 // import mongoose from 'mongoose';
 
 // const seniorSchema = new mongoose.Schema({
 //   name: {
 //     type: mongoose.Schema.Types.ObjectId,
 //     ref: 'User',
-  
 //     unique: true, 
 //   },
 
@@ -32,7 +34,7 @@
 //     required: true,
 //   },
 
-//   idCardURL:{
+//   idCardURL: {
 //     type: String,
 //     validate: {
 //       validator: function(v) {
@@ -40,18 +42,22 @@
 //       },
 //       message: props => `${props.value} is not a valid URL!`
 //     }
- 
 //   },
 
-//   LinkedInUrl:{
-//     type: String,
-//     validate: {
-//       validator: function(v) {
-//         return /^(http|https):\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+$/.test(v);
-//       },
-//       message: props => `${props.value} is not a valid LinkedIn URL!`
-//     }
-//   },
+//   LinkedInUrl: {
+//   type: String,
+//   validate: {
+//     validator: function(v) {
+//       return /^https:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-_%/?=]+\/?$/.test(v);
+//     },
+//     message: props => `${props.value} is not a valid LinkedIn URL!`
+//   }
+// }
+// ,isVerified: {
+//   type: Boolean,
+//   default: false
+// }
+// ,
 
 //   profilePicture: {
 //     type: String,
@@ -64,10 +70,10 @@
 //     },
 
 
-//   isVerified: {
-//     type: Boolean,
-//     default: false
-//   }
+//   // isVerified: {
+//   //   type: Boolean,
+//   //   default: false
+//   // }
 
 //   },
 
@@ -75,7 +81,7 @@
 //     type: Date,
 //     default: Date.now
 //   }
-// },{timestamps: true});
+// }, { timestamps: true });
 
 // const Senior = mongoose.model('Senior', seniorSchema);
 
@@ -167,5 +173,3 @@ const seniorSchema = new mongoose.Schema({
 const Senior = mongoose.model('Senior', seniorSchema);
 
 export default Senior;
-
-

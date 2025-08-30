@@ -1,7 +1,12 @@
 
+
 // import authmiddleware from '../middleware/authmiddleware.js';
 // import Senior from '../models/senior.js';
 // import { cloudinary } from '../utils/cloudinary.js';
+
+
+
+
 // // registrationController.js
 // const registerSenior = async (req, res) => {
 //   const { collegeName, branch, currentYear, passingYear, LinkedInUrl } = req.body;
@@ -46,7 +51,6 @@
 // };
  
 // export default registerSenior;
-
 
 import authmiddleware from '../middleware/authmiddleware.js';
 import Senior from '../models/senior.js';

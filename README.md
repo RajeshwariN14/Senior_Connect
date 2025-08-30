@@ -1,6 +1,62 @@
-<H4><p>
-  <B>Senior Connect </B> is  built to help engineering aspirants find mentors across different Engineering colleges and get their doubts related to college and admission resolved .<br>
-  Senior connect allows  student to find a mentor (senior) from various college, various branches and various graduating year. It also allows them to connect with them and book a session for query resolution.
-  This platform tries to solve the most common problem faced by students aspiring to seek admission in various colleges after their JEE and CET Exams. 
-  Its becomes very difficult to find someone who can solve our doubts in our desired colleges Hence this platform tries to solv ethis real problem.
-</p></H4>
+#  Senior Connect – Bridge the Gap Between Aspirants & Mentors
+
+## roject Overview
+
+**Senior Connect** is a smart platform designed to help engineering aspirants connect with verified student mentors (seniors) from various engineering colleges, branches, and graduation years. 
+
+Choosing the right college and branch after exams like **JEE** and **CET** is a critical decision, yet students often struggle to find genuine, firsthand guidance from those who have already been through the process. **Senior Connect** solves this problem by providing an accessible mentorship system where students can:
+
+- **Search and filter mentors** by college, branch, and graduating year  
+- **Book 1-on-1 sessions** with mentors to ask personalized questions  
+-  **Gain clarity** on college life, academics, placements, and more
+
+---
+
+##  Why Senior Connect?
+
+After exams, most aspirants have doubts about:
+- Choosing between colleges and branches
+- Understanding the campus culture
+- Knowing placement stats and internship opportunities
+- Coping with academic pressure and peer competition
+
+However, finding a trustworthy senior to talk to can be extremely difficult. **Senior Connect** bridges this gap by creating a curated network of approachable mentors from top engineering institutes.
+
+---
+
+##  Key Features
+
+-  Mentor search by filters (college, branch, graduation year)
+-  Session booking interface for direct 1-on-1 interactions
+-  Secure data handling and user-friendly design
+-  Scalable backend to handle mentor-mentee interactions
+
+---
+
+## Tech Stack
+
+- **Frontend**: React.js, Tailwind CSS
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **Other Tools**: Git, Postman
+
+---
+
+
+---
+
+
+
+##  Future Scope
+
+- Mentor verification system
+- Real-time chat between mentors and mentees
+- Ratings and feedback for mentors
+- Admin dashboard to manage users and bookings
+
+---
+
+---
+
+
+

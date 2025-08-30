@@ -10,8 +10,8 @@ import { auth } from 'google-auth-library';
 import { getUserProfile, updateUserProfile } from '../controller/authController.js';
 import { getAllSeniors } from '../controller/authController.js';
 import { getSeniorById } from '../controller/authController.js';
-import { getSeniorByCollegeName } from '../controller/authController.js';
 import upload from '../middleware/uploadmiddleware.js';
+import { getSeniorByCollegeName } from '../controller/authController.js';
 
 
 

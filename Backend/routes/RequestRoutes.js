@@ -1,4 +1,6 @@
-// // routes/sessionRoutes.js
+
+
+
 // import express from "express";
 // import SessionRequest from "../models/session.js";
 // import Senior from "../models/senior.js";
@@ -119,8 +121,6 @@
 
 // export default router;
 
-
-
 // routes/sessionRoutes.js
 import express from "express";
 import SessionRequest from "../models/session.js";
@@ -196,11 +196,7 @@ router.post(
       /* ----- email senior immediately ----- */
       // 1. load senior → user → email
       const seniorDoc = await Senior.findById(seniorId).populate("name"); // ‘name’ holds the User _id
-      if (!seniorDoc || !seniorDoc.name) {
-        return res
-      .status(404)
-      .json({ msg: "Senior not found or associated user does not exist" });
-      }
+
       const seniorEmail = seniorDoc.name.email;
       const studentUser = await User.findById(studentId);
 

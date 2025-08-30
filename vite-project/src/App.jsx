@@ -1,5 +1,5 @@
 
-// import React from 'react';
+// import React, { useState } from 'react';
 // import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // import Navbar from './components/Navbar';
@@ -16,23 +16,26 @@
 // import PrivateRoute from './components/PrivateRoute';
 // import Seniorlist from './pages/Seniorlist';
 
+// import { AuthProvider } from './context/AuthContext';
+
 // function AppRoutes() {
+//   const [searchQuery, setSearchQuery] = useState('');
+
 //   return (
 //     <>
-//       <Navbar />
+//       <Navbar onSearch={setSearchQuery} /> {/* Pass setter to Navbar */}
 //       <Routes>
-//         {/* Home route */}
 //         <Route
 //           path="/"
 //           element={
 //             <div className="flex flex-col min-h-screen">
-//               <Middle twoPerRow={false} />
+//               <Middle searchQuery={searchQuery} twoPerRow={false} /> {/* Pass query to Middle */}
 //               <Aboutus />
 //             </div>
 //           }
 //         />
 
-//         {/* Public routes */}
+//         {/* Public Routes */}
 //         <Route path="/login" element={<Studentlogin />} />
 //         <Route path="/register" element={<Register />} />
 //         <Route path="/become-senior" element={<Becomesenior />} />
@@ -41,7 +44,7 @@
 //         <Route path="/connections" element={<Connections />} />
 //         <Route path="/seniorconnection" element={<Connectionsenior />} />
 
-//         {/* Private routes */}
+//         {/* Private Routes */}
 //         <Route
 //           path="/studentprofile"
 //           element={
@@ -74,22 +77,29 @@
 // function App() {
 //   return (
 //     <Router>
-//       <AppRoutes />
+//       <AuthProvider>
+//         <AppRoutes />
+//       </AuthProvider>
 //     </Router>
 //   );
 // }
 
 // export default App;
 
+
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// 💡 Import your AuthProvider
+import { AuthProvider } from './context/AuthContext';
 
 import Navbar from './components/Navbar';
 import Middle from './components/Middle';
 import Aboutus from './components/Aboutus';
 
 import Studentlogin from './pages/Studentlogin';
-import Myprofile from './pages/Myprofile'; // This will render SeniorProfile or StudentProfile
+import Myprofile from './pages/Myprofile';
 import ViewSeniorprofile from './components/ViewSeniorprofile';
 import Connections from './components/Connections';
 import Connectionsenior from './components/Connectionsenior';
@@ -97,9 +107,8 @@ import Register from './pages/Register';
 import Becomesenior from './pages/Becomesenior';
 import PrivateRoute from './components/PrivateRoute';
 import Seniorlist from './pages/Seniorlist';
-
-// Import the AuthProvider
-import { AuthProvider } from './context/AuthContext';
+import SearchResults from './pages/SearchResults';
+import Feedback from './components/Feedback';
 
 function AppRoutes() {
   return (
@@ -112,22 +121,25 @@ function AppRoutes() {
           element={
             <div className="flex flex-col min-h-screen">
               <Middle twoPerRow={false} />
-              <Aboutus />
+              <Feedback />
             </div>
           }
         />
+
+        {/* Full-page About Us route */}
+        <Route path="/about" element={<Aboutus />} />
+        <Route path="/feedback" element={<Feedback />} />
 
         {/* Public routes */}
         <Route path="/login" element={<Studentlogin />} />
         <Route path="/register" element={<Register />} />
         <Route path="/become-senior" element={<Becomesenior />} />
-        {/* Myprofile route will dynamically render SeniorProfile/StudentProfile based on user role */}
-        <Route path="/profile" element={<Myprofile />} />
         <Route path="/profile/:id" element={<ViewSeniorprofile />} />
         <Route path="/connections" element={<Connections />} />
         <Route path="/seniorconnection" element={<Connectionsenior />} />
+        <Route path="/search-results" element={<SearchResults />} />
 
-        {/* Private routes - now using the PrivateRoute component with AuthContext */}
+        {/* Private routes */}
         <Route
           path="/studentprofile"
           element={
@@ -160,7 +172,7 @@ function AppRoutes() {
 function App() {
   return (
     <Router>
-      {/* Wrap your entire application with AuthProvider */}
+      {/* ✅ Wrap your entire app with AuthProvider */}
       <AuthProvider>
         <AppRoutes />
       </AuthProvider>
