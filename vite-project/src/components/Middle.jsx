@@ -15,14 +15,14 @@
 //   }, [searchQuery]);
 
 //   const fetchAllSeniors = () => {
-//     axios.get('http://localhost:3000/api/auth/seniors')
+//     axios.get('https://senior-connect-backend.onrender.com3000/api/auth/seniors')
 //       .then(res => setSeniors(res.data))
 //       .catch(err => console.error('Error fetching seniors:', err));
 //   };
 
 //   const handleSearch = async (query) => {
 //     try {
-//       const res = await axios.get(`http://localhost:3000/api/seniors/search?collegeName=${query}`);
+//       const res = await axios.get(`https://senior-connect-backend.onrender.com3000/api/seniors/search?collegeName=${query}`);
 //       setSeniors(res.data);
 //     } catch (err) {
 //       console.error('Search failed', err);
@@ -80,7 +80,7 @@ function Middle({ twoPerRow }) {
   const [lineIndex, setLineIndex] = useState(0);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/auth/seniors')
+    axios.get('https://senior-connect-backend.onrender.com3000/api/auth/seniors')
       .then(res => setSeniors(res.data))
       .catch(err => console.error('Error fetching seniors:', err));
   }, []);

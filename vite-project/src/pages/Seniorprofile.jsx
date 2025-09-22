@@ -244,7 +244,7 @@ function SeniorProfile() {
       }
 
       try {
-        const res = await fetch('http://localhost:3000/api/auth/profile', {
+        const res = await fetch('https://senior-connect-backend.onrender.com3000/api/auth/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -302,7 +302,7 @@ function SeniorProfile() {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/auth/profile', {
+      const res = await fetch('https://senior-connect-backend.onrender.com3000/api/auth/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -354,7 +354,7 @@ function SeniorProfile() {
     form.append('profilePicture', file);
 
     try {
-      const res = await fetch('http://localhost:3000/api/auth/profile', {
+      const res = await fetch('https://senior-connect-backend.onrender.com3000/api/auth/profile', {
         method: 'PUT',
         headers: {
           // 'Content-Type': 'multipart/form-data' is automatically set by FormData

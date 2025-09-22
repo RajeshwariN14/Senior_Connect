@@ -188,7 +188,7 @@ function Navbar() {
   const handleSearch = async (e) => {
     if (e.key === 'Enter' && searchQuery.trim() !== '') {
       try {
-        const res = await fetch(`http://localhost:3000/api/auth/search?collegeName=${encodeURIComponent(searchQuery.trim())}`);
+        const res = await fetch(`https://senior-connect-backend.onrender.com3000/api/auth/search?collegeName=${encodeURIComponent(searchQuery.trim())}`);
         if (!res.ok) throw new Error('Search failed');
         const data = await res.json();
         navigate('/search-results', { state: { results: data } });

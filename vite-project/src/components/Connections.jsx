@@ -12,7 +12,7 @@
 //     const fetchConnections = async () => {
 //       try {
 //         const token = localStorage.getItem('token');
-//         const res = await axios.get('http://localhost:3000/api/pending/student', {
+//         const res = await axios.get('https://senior-connect-backend.onrender.com3000/api/pending/student', {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
 //           },
@@ -166,7 +166,7 @@ function Connections() {
     const fetchConnections = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:3000/api/pending/student', {
+        const res = await axios.get('https://senior-connect-backend.onrender.com3000/api/pending/student', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

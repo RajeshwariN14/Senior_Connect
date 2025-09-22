@@ -23,7 +23,7 @@
 //   useEffect(() => {
 //     const fetchSenior = async () => {
 //       try {
-//         const res = await fetch(`http://localhost:3000/api/auth/seniors/${seniorId}`);
+//         const res = await fetch(`https://senior-connect-backend.onrender.com3000/api/auth/seniors/${seniorId}`);
 //         const data = await res.json();
 //         setSenior(data);
 //       } catch (error) {
@@ -39,7 +39,7 @@
 //   useEffect(() => {
 //     const checkIfAlreadyRequested = async () => {
 //       try {
-//         const res = await fetch("http://localhost:3000/api/pending/student", {
+//         const res = await fetch("https://senior-connect-backend.onrender.com3000/api/pending/student", {
 //           credentials: "include",
 //           headers: {
 //             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -87,7 +87,7 @@
 //     if (cetScoreCard) formData.append("cetScoreCard", cetScoreCard);
 
 //     try {
-//       const res = await fetch("http://localhost:3000/api/requests/request", {
+//       const res = await fetch("https://senior-connect-backend.onrender.com3000/api/requests/request", {
 //         method: "POST",
 //         credentials: "include",
 //         headers: {
@@ -285,7 +285,7 @@ function ViewSeniorprofile() {
   useEffect(() => {
     const fetchSenior = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/auth/seniors/${seniorId}`);
+        const res = await fetch(`https://senior-connect-backend.onrender.com3000/api/auth/seniors/${seniorId}`);
         const data = await res.json();
         setSenior(data);
       } catch (error) {
@@ -301,7 +301,7 @@ function ViewSeniorprofile() {
   useEffect(() => {
     const checkIfAlreadyRequested = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/pending/student", {
+        const res = await fetch("https://senior-connect-backend.onrender.com3000/api/pending/student", {
           credentials: "include",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -328,7 +328,7 @@ function ViewSeniorprofile() {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const res = await fetch('http://localhost:3000/api/auth/profile', {
+        const res = await fetch('https://senior-connect-backend.onrender.com3000/api/auth/profile', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -367,7 +367,7 @@ function ViewSeniorprofile() {
     if (cetScoreCard) formData.append("cetScoreCard", cetScoreCard);
 
     try {
-      const res = await fetch("http://localhost:3000/api/requests/request", {
+      const res = await fetch("https://senior-connect-backend.onrender.com3000/api/requests/request", {
         method: "POST",
         credentials: "include",
         headers: {

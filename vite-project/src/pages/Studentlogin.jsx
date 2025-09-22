@@ -184,7 +184,7 @@ function Studentlogin() {
   }, []);
   const handleCredentialResponse = async (response) => {
   try {
-    const res = await fetch("http://localhost:3000/api/auth/google-auth", {
+    const res = await fetch("https://senior-connect-backend.onrender.com3000/api/auth/google-auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id_token: response.credential }),
@@ -234,7 +234,7 @@ function Studentlogin() {
   }
 
   try {
-    const res = await fetch("http://localhost:3000/api/auth/login", {
+    const res = await fetch("https://senior-connect-backend.onrender.com3000/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
