@@ -78,7 +78,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin:'http://localhost:5173',
+  origin:'https://senior-connect-gamma.vercel.app/',
   credentials:true
 }));
 
