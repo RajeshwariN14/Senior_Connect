@@ -7,7 +7,7 @@
 // // //   const [seniors, setSeniors] = useState([]);
 
 // // //   useEffect(() => {
-// // //     axios.get('https://senior-connect-backend.onrender.com3000/api/auth/seniors', { withCredentials: true })
+// // //     axios.get('https://senior-connect-backend.onrender.com/api/auth/seniors', { withCredentials: true })
 // // //       .then((res) => setSeniors(res.data))
 // // //       .catch((err) => console.error('Error fetching seniors:', err));
 // // //   }, []);
@@ -41,7 +41,7 @@
 // // //   useEffect(() => {
 // // //     const fetchSeniors = async () => {
 // // //       try {
-// // //         const response = await axios.get('https://senior-connect-backend.onrender.com3000/api/auth/seniors', {
+// // //         const response = await axios.get('https://senior-connect-backend.onrender.com/api/auth/seniors', {
 // // //           withCredentials: true
 // // //         });
 // // //         console.log('Backend response:', response.data); 
@@ -59,7 +59,7 @@
 // // //   const fetchSeniors = async () => {
 // // //     console.log('Fetching seniors...'); // ADD THIS
 // // //     try {
-// // //       const response = await axios.get('https://senior-connect-backend.onrender.com3000/api/auth/seniors', {
+// // //       const response = await axios.get('https://senior-connect-backend.onrender.com/api/auth/seniors', {
 // // //         withCredentials: true
 // // //       });
 // // //       // ADD THIS
@@ -74,7 +74,7 @@
 // // useEffect(() => {
 // //   const fetchSeniors = async () => {
 // //     try {
-// //       const response = await axios.get('https://senior-connect-backend.onrender.com3000/api/auth/seniors', {
+// //       const response = await axios.get('https://senior-connect-backend.onrender.com/api/auth/seniors', {
 // //         withCredentials: true
 // //       });
 // //       console.log('Backend response:', response.data);
@@ -119,7 +119,7 @@
 //   useEffect(() => {
 //     const fetchSeniors = async () => {
 //       try {
-//         const response = await axios.get('https://senior-connect-backend.onrender.com3000/api/auth/seniors', {
+//         const response = await axios.get('https://senior-connect-backend.onrender.com/api/auth/seniors', {
 //           withCredentials: true
 //         });
 //         setSeniors(response.data);
@@ -186,7 +186,7 @@ function SeniorList() {
   useEffect(() => {
     const fetchSeniors = async () => {
       try {
-        const response = await axios.get('https://senior-connect-backend.onrender.com3000/api/auth/seniors', {
+        const response = await axios.get('https://senior-connect-backend.onrender.com/api/auth/seniors', {
           withCredentials: true
         });
         setSeniors(response.data);

@@ -45,7 +45,7 @@ function Myprofile() {
       return;
     }
 
-    fetch('https://senior-connect-backend.onrender.com3000/api/auth/profile', {
+    fetch('https://senior-connect-backend.onrender.com/api/auth/profile', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())

@@ -16,7 +16,7 @@
 //         return;
 //       }
 
-//       const res = await fetch('https://senior-connect-backend.onrender.com3000/api/pending/senior', {
+//       const res = await fetch('https://senior-connect-backend.onrender.com/api/pending/senior', {
 //         method: 'GET',
 //         headers: {
 //           Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@
 
 //     try {
 //       const token = localStorage.getItem('token');
-//       const res = await fetch(`https://senior-connect-backend.onrender.com3000/api/sessions/confirm/${session._id}`, {
+//       const res = await fetch(`https://senior-connect-backend.onrender.com/api/sessions/confirm/${session._id}`, {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',
@@ -212,7 +212,7 @@ function Connectionsenior() {
         return;
       }
 
-      const res = await fetch('https://senior-connect-backend.onrender.com3000/api/pending/senior', {
+      const res = await fetch('https://senior-connect-backend.onrender.com/api/pending/senior', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -244,7 +244,7 @@ function Connectionsenior() {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`https://senior-connect-backend.onrender.com3000/api/sessions/confirm/${session._id}`, {
+      const res = await fetch(`https://senior-connect-backend.onrender.com/api/sessions/confirm/${session._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

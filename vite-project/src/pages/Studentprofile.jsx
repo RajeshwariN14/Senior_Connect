@@ -217,7 +217,7 @@ function StudentProfile() {
       }
 
       try {
-        const res = await fetch('https://senior-connect-backend.onrender.com3000/api/auth/profile', {
+        const res = await fetch('https://senior-connect-backend.onrender.com/api/auth/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -276,7 +276,7 @@ function StudentProfile() {
     form.append('profilePicture', file); // Ensure your backend expects 'profilePicture' for student updates too
 
     try {
-      const res = await fetch('https://senior-connect-backend.onrender.com3000/api/auth/profile', {
+      const res = await fetch('https://senior-connect-backend.onrender.com/api/auth/profile', {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -323,7 +323,7 @@ function StudentProfile() {
     }
 
     try {
-      const res = await fetch('https://senior-connect-backend.onrender.com3000/api/auth/profile', {
+      const res = await fetch('https://senior-connect-backend.onrender.com/api/auth/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

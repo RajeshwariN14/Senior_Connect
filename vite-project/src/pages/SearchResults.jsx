@@ -16,7 +16,7 @@ function SearchResults() {
         if (location.state?.results) {
           setSeniors(location.state.results);
         } else if (query) {
-          const res = await fetch(`https://senior-connect-backend.onrender.com3000/api/auth/search?collegeName=${encodeURIComponent(query)}`, {
+          const res = await fetch(`https://senior-connect-backend.onrender.com/api/auth/search?collegeName=${encodeURIComponent(query)}`, {
             credentials: 'include',
           });
 

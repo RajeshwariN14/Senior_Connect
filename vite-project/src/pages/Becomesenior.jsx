@@ -167,7 +167,7 @@ function Becomesenior() {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://senior-connect-backend.onrender.com3000/api/auth/register', {
+      const res = await fetch('https://senior-connect-backend.onrender.com/api/auth/register', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
