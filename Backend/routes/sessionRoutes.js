@@ -77,7 +77,7 @@
 
 import express from 'express';
 import SessionRequest from '../models/session.js';
-import createCalendarEvent from '../utils/createCalenderEvent.js';
+// import createCalendarEvent from '../utils/createCalenderEvent.js';
 import sendEmail from '../utils/sendEmail.js';
 
 const router = express.Router();
@@ -102,39 +102,41 @@ router.post('/confirm/:id', async (req, res) => {
     const startTime = new Date(scheduledAt);
     const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
 
-    const calendarEvent = await createCalendarEvent({
-      summary: 'Senior Connect Session',
-      description: `JEE: ${session.student?.jeePercentile}, CET: ${session.student?.cetPercentile}`,
-      startTime,
-      endTime,
-      attendeeEmails: [
-        session.student?.email,
-        session.senior?.name?.email
-      ],
-    });
+    // const calendarEvent = await createCalendarEvent({
+    //   summary: 'Senior Connect Session',
+    //   description: `JEE: ${session.student?.jeePercentile}, CET: ${session.student?.cetPercentile}`,
+    //   startTime,
+    //   endTime,
+    //   attendeeEmails: [
+    //     session.student?.email,
+    //     session.senior?.name?.email
+    //   ],
+    // });
 
-    console.log("Event created:", calendarEvent);
+    // console.log("Event created:", calendarEvent);
+
+    const meetLink = "https://meet.google.com/urz-eufn-fyh?hs=224";
 
     session.status = 'confirmed';
     session.scheduledAt = scheduledAt;
-    session.googleMeetLink = calendarEvent.hangoutLink;
+    session.googleMeetLink = meetLink;
     await session.save();
 
-    console.log("💾 Session updated in DB");
+    console.log("Session updated in DB");
 
     await sendEmail(
       session.student.email,
       "Your Session is Confirmed",
       `<h2>Your session is confirmed</h2>
        <p>Date: ${startTime.toLocaleString('en-IN')}</p>
-       <p>Meet Link: <a href="${calendarEvent.hangoutLink}">${calendarEvent.hangoutLink}</a></p>`
+       <p>Meet Link: <a href="${meetLink}">${meetLink}</a></p>`
     );
 
     console.log(" Email sent to student");
 
     res.json({
       message: "Session confirmed successfully",
-      meetLink: calendarEvent.hangoutLink
+      meetLink: meetLink
     });
 
   } catch (error) {
