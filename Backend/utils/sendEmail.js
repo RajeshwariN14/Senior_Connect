@@ -1,16 +1,39 @@
 
 
 import nodemailer from 'nodemailer';
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
  
-    host: 'smtp.gmail.com',
-    port: 465, // Port for secure SMTP
+//     host: 'smtp.gmail.com',
+//     port: 465, // Port for secure SMTP
+//     user: process.env.SENDER_EMAIL,
+//     pass: process.env.SENDER_PASSWORD,
+//      // Use an app password if 2FA is enabled
+//   },
+// });
+
+// const transporter = nodemailer.createTransport({
+//   host: "smtp.gmail.com",
+//   port: 465,
+//   secure: true, // MUST be true for 465
+//   auth: {
+//     user: process.env.SENDER_EMAIL,
+//     pass: process.env.SENDER_PASSWORD,
+//   },
+// });
+
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // false for 587
+  auth: {
     user: process.env.SENDER_EMAIL,
-    pass: process.env.SENDER_PASSWORD, // Use an app password if 2FA is enabled
+    pass: process.env.SENDER_PASSWORD,
   },
 });
+
 const sendEmail = async (to, subject, html , attachments=[]) => {
   const mailOptions = {
     from: process.env.SENDER_EMAIL,
