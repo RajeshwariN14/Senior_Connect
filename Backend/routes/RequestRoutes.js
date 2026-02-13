@@ -171,43 +171,21 @@ router.post(
 
       const attachments = [];
 
-      // if (jeeScoreCardURL) {
-      //   attachments.push({
-      //     filename: getFilenameFromURL(jeeScoreCardURL, "JEE_Scorecard"),
-      //     path: jeeScoreCardURL,
-      //   });
-      // }
-
-      // if (cetScoreCardURL) {
-      //   attachments.push({
-      //     filename: getFilenameFromURL(cetScoreCardURL, "CET_Scorecard"),
-      //     path: cetScoreCardURL,
-      //   });
-      // }
-
-       if (jeeScoreCardURL) {
-        const response = await axios.get(jeeScoreCardURL, {
-          responseType: "arraybuffer",
+      if (jeeScoreCardURL) {
+        attachments.push({
+          filename: getFilenameFromURL(jeeScoreCardURL, "JEE_Scorecard"),
+          path: jeeScoreCardURL,
         });
-
-      attachments.push({
-        filename: getFilenameFromURL(jeeScoreCardURL, "JEE_Scorecard"),
-        content: Buffer.from(response.data).toString("base64"),
-        contentType: response.headers["content-type"], // will be image/jpeg or image/png
-      });
-    }
+      }
 
       if (cetScoreCardURL) {
-        const response = await axios.get(cetScoreCardURL, {
-          responseType: "arraybuffer",
+        attachments.push({
+          filename: getFilenameFromURL(cetScoreCardURL, "CET_Scorecard"),
+          path: cetScoreCardURL,
         });
+      }
 
-      attachments.push({
-        filename: getFilenameFromURL(cetScoreCardURL, "CET_Scorecard"),
-        content: Buffer.from(response.data).toString("base64"),
-        contentType: response.headers["content-type"], // will be image/jpeg or image/png
-      });
-    }
+
 
       const request = await SessionRequest.create({
         student: studentId,
