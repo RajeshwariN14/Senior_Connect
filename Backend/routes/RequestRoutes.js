@@ -129,6 +129,7 @@ import User from "../models/user.js";
 import sendEmail from "../utils/sendEmail.js";
 import { authenticate } from "../middleware/authmiddleware.js";
 import upload from "../middleware/uploadmiddleware.js";
+import axios from "axios";
 
 const router = express.Router();
 router.post(
@@ -170,19 +171,43 @@ router.post(
 
       const attachments = [];
 
-      if (jeeScoreCardURL) {
-        attachments.push({
-          filename: getFilenameFromURL(jeeScoreCardURL, "JEE_Scorecard"),
-          path: jeeScoreCardURL,
+      // if (jeeScoreCardURL) {
+      //   attachments.push({
+      //     filename: getFilenameFromURL(jeeScoreCardURL, "JEE_Scorecard"),
+      //     path: jeeScoreCardURL,
+      //   });
+      // }
+
+      // if (cetScoreCardURL) {
+      //   attachments.push({
+      //     filename: getFilenameFromURL(cetScoreCardURL, "CET_Scorecard"),
+      //     path: cetScoreCardURL,
+      //   });
+      // }
+
+       if (jeeScoreCardURL) {
+        const response = await axios.get(jeeScoreCardURL, {
+          responseType: "arraybuffer",
         });
-      }
+
+      attachments.push({
+        filename: getFilenameFromURL(jeeScoreCardURL, "JEE_Scorecard"),
+        content: Buffer.from(response.data).toString("base64"),
+        contentType: response.headers["content-type"], // will be image/jpeg or image/png
+      });
+    }
 
       if (cetScoreCardURL) {
-        attachments.push({
-          filename: getFilenameFromURL(cetScoreCardURL, "CET_Scorecard"),
-          path: cetScoreCardURL,
+        const response = await axios.get(cetScoreCardURL, {
+          responseType: "arraybuffer",
         });
-      }
+
+      attachments.push({
+        filename: getFilenameFromURL(cetScoreCardURL, "CET_Scorecard"),
+        content: Buffer.from(response.data).toString("base64"),
+        contentType: response.headers["content-type"], // will be image/jpeg or image/png
+      });
+    }
 
       const request = await SessionRequest.create({
         student: studentId,
